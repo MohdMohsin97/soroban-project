@@ -95,10 +95,12 @@ async function getTrades() {
   let caller = await getPublicKey()
   try {
     const result = await contractInt(caller, "get_trades");
+    console.log(result);
     let trades = result._value[0]._attributes.val._value.toString();
     console.log(trades);
     return trades;
   } catch (error) {
+    console.log(error)
    return []
   }
 }

@@ -16,7 +16,6 @@ const Trades = () => {
 
     useEffect(() => {
       const trades = getTrades();
-      console.log(trades);
     }, [])
     
   return (

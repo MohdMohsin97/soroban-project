@@ -6,6 +6,7 @@ import {
   BASE_FEE,
   nativeToScVal,
   Address,
+  decodeAddressToMuxedAccount,
 } from "@stellar/stellar-sdk";
 import { userSignTransaction } from "../freighter";
 import { getPublicKey } from "@stellar/freighter-api";
@@ -96,9 +97,25 @@ async function getTrades() {
   try {
     const result = await contractInt(caller, "get_trades");
     console.log(result);
-    let trades = result._value[0]._attributes.val._value.toString();
+    let trades = [];
+    for(let i = 0; i < result._value.length; i++) {
+      let energy_amount = Number(result._value[i]._value[0]._attributes.val._value._attributes.lo._value);
+      let id = Number(result._value[i]._value[1]._attributes.val._value._attributes.lo._value)
+      let price = Number(result._value[i]._value[2]._attributes.val._value._attributes.lo._value)
+      let seller = result._value[i]._value[3]._attributes.val._value._value._value.toString();
+      let withdraw_amount = Number(result._value[i]._value[4]._attributes.val._value._attributes.lo._value); 
+      trades.push({
+        energy_amount,
+        id,
+        price,
+        seller,
+        withdraw_amount
+      });
+    }
     console.log(trades);
-    return trades;
+    // let trades = result._value[0]._value[3]._attributes.val._value._value._value.toString();
+    // console.log(trades);
+    // return trades;
   } catch (error) {
     console.log(error)
    return []

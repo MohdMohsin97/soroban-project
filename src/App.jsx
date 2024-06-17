@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 
 import Header from "./components/Header";
 import Trades from "./components/Trades";
@@ -8,6 +8,14 @@ const passIdContext = createContext();
 
 function App() {
   const [pubkey, _setPubKey] = useState("");
+
+  useEffect(() => {
+    
+  
+    
+  }, [])
+  
+
   return (
     <>
       <Header setPubKey={_setPubKey} />
